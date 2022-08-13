@@ -1,4 +1,4 @@
-import axios from '@/utils/axios.js';
+import axios from 'axios';
 
 export default class Mail {
     static fetch = (config) => {

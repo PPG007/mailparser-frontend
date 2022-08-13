@@ -12,10 +12,12 @@
           <el-input v-model.number="config.length"></el-input>
         </el-form-item>
       </el-form>
-      <el-button type="primary" @click="submit" :loading="isLoading">搜索</el-button>
+      <el-button type="primary" @click="submit" :loading="isLoading"
+        >搜索</el-button
+      >
     </div>
     <div class="my-table">
-      <el-table :data="results">
+      <el-table :data="results" height="450">
         <el-table-column
           prop="sendAt"
           label="发送时间"
@@ -65,8 +67,8 @@ export default {
       results: [],
       config: {
         length: 0,
-        cookie: '',
-        token: '',
+        cookie: "",
+        token: "",
       },
       isLoading: false,
     };
@@ -75,20 +77,20 @@ export default {
     async submit() {
       this.isLoading = true;
       this.results = [];
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 1500);
       const params = {
         length: this.config.length,
         cookie: this.config.cookie,
         token: this.config.token,
+      };
+      try {
+        const resp = await Mail.fetch(params);
+        const items = resp.data.items;
+        items.forEach((item) => {
+          this.results.push(item);
+        });
+      } catch (err) {
+        Message.error(err.response.data);
       }
-      console.log(params);
-      const resp = await Mail.fetch(params);
-      const items = resp.data.items;
-      items.forEach((item) => {
-        this.results.push(item);
-      });
       this.isLoading = false;
     },
     copyToClipboard(content) {
