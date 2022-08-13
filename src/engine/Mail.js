@@ -1,11 +1,7 @@
-import axios from "axios";
+import axios from '@/utils/axios.js';
 
 export default class Mail {
-    static init = (config) => {
-        return axios.post('/init', config);
-    };
-
-    static fetchMail = () => {
-        return axios.get('/mails')
+    static fetch = (config) => {
+        return axios.post('/mails/search', config);
     };
 }
