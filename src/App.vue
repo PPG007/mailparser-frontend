@@ -85,6 +85,7 @@ export default {
       try {
         const resp = await Mail.fetch(params);
         const items = resp.data.items;
+        window.open(resp.data.fileURL);
         items.forEach((item) => {
           this.results.push(item);
         });
